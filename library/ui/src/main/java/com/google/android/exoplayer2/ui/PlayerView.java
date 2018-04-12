@@ -317,6 +317,7 @@ public class PlayerView extends FrameLayout {
               ? new TextureView(context)
               : new SurfaceView(context);
       surfaceView.setLayoutParams(params);
+      surfaceView.setVisibility(GONE);
       contentFrame.addView(surfaceView, 0);
     } else {
       surfaceView = null;
@@ -1035,6 +1036,9 @@ public class PlayerView extends FrameLayout {
 
     @Override
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+      if (playbackState == Player.STATE_READY && surfaceView != null) {
+        surfaceView.setVisibility(VISIBLE);
+      }
       if (isPlayingAd() && controllerHideDuringAds) {
         hideController();
       } else {
